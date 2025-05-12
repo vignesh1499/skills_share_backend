@@ -1,9 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import {User} from "./user.entity"
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { User } from './user.entity';
 
 @Entity("skills")
 export class Skill {
-  @PrimaryGeneratedColumn() // <-- Auto-incrementing number
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => User, user => user?.skills)
@@ -21,7 +29,13 @@ export class Skill {
   @Column('decimal', { precision: 10, scale: 2 })
   hourly_rate: number;
 
-  @ManyToOne(()=> User, user => user.skills,{eager:true})
+  @ManyToOne(() => User, user => user.skills, { eager: true })
   @JoinColumn({ name: 'providerId' })
   createdBy: User;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

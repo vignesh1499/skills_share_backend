@@ -9,9 +9,14 @@ export class SkillController {
 
     //Create Skill
     async createSkill(req: any, res: Response) {
-
         const skillDetails = Object.assign(new SkillDTO(), req.body);
         const providerId = req?.user?.id;
+        const role = req?.user?.role; // Assuming the decoded JWT payload includes the `role`
+
+        // Role-based access control
+        if (role !== "provider") {
+            return res.status(403).json({ message: "Only 'provider' role can create skills." });
+        }
         const skillCreation = { ...skillDetails, providerId: providerId };
         try {
             const skill = await service.createSkill({ ...skillCreation });
@@ -24,12 +29,17 @@ export class SkillController {
     }
 
     // //Update Skill
-    async updateSkill(req: Request, res: Response) {
-        console.log(req.body.id)
+    async updateSkill(req: any, res: Response) {
         try {
             const skillId = parseInt(req.body.id);
             if (isNaN(skillId)) {
                 return res.status(400).json({ message: 'Invalid skill ID' });
+            }
+            const role = req?.user?.role; // Assuming the decoded JWT payload includes the `role`
+
+            // Role-based access control
+            if (role !== "provider") {
+                return res.status(403).json({ message: "Only 'provider' role can update skills." });
             }
 
             const updatedSkill = await service.updateSkill(skillId, req.body);

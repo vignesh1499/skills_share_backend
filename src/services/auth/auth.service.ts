@@ -8,13 +8,13 @@ export class AuthService {
 
   //Register  -- need tp add Interface instead of userDetails
   async registerUser(userDetails: any) {
-    const { email, password, mobile, type, address_street, address_city, address_state, address_post_code, first_name, last_name , address_street_optional, address_city_optional, address_state_optional , address_post_code_optional} = userDetails;
+    const { email, password, mobile, type, address_street, address_city, address_state, address_post_code, first_name, last_name, address_street_optional, address_city_optional, address_state_optional, address_post_code_optional, role } = userDetails;
     const exists = await this.userRepo.findOneBy({ email });
     if (exists) throw new Error("User already exists");
 
     const hashed = await bcrypt.hash(password, 10);
     // console.log(email, password, mobile, type, address_street, address_city, address_state, address_post_code, first_name, last_name , address_street_optional, address_city_optional, address_state_optional , address_post_code_optional);
-    const user = this.userRepo.create({ email, password: hashed, mobile, type, address_street, address_city, address_state, address_post_code, first_name, last_name , address_street_optional, address_city_optional, address_state_optional , address_post_code_optional });
+    const user = this.userRepo.create({ email, password: hashed, role, mobile, type, address_street, address_city, address_state, address_post_code, first_name, last_name, address_street_optional, address_city_optional, address_state_optional, address_post_code_optional });
     await this.userRepo.save(user);
 
     return { id: user.id, email: user.email };
@@ -29,7 +29,7 @@ export class AuthService {
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw new Error("Invalid Password");
 
-    const token = generateToken({ id: user.id, email: user.email,type:user.type,role:user.role });
+    const token = generateToken({ id: user.id, email: user.email, type: user.type, role: user.role });
     return { token };
   }
 }

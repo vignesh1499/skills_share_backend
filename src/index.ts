@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRouters from "./routes/auth/auth.routes";
 import skillRouters from "./routes/auth/skill.routes";
+import tasksRouters from "./routes/auth/tasks.routes";
 import { dataSource } from "./config/db";
 import { User } from "./entities/user.entity";
 
@@ -21,6 +22,7 @@ app.get("/", (_req, res) => {
 
 app.use("/auth", authRouters);
 app.use("/skill", skillRouters);
+app.use("/tasks", tasksRouters);
 
 dataSource.getRepository(User);
 
