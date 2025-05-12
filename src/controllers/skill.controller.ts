@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { skillservice } from "../../services/auth/skill. service";
-import { SkillDTO } from "../../validators/skill.validator";
+import { skillservice } from "../services/skill. service";
+import { SkillDTO } from "../validators/skill.validator";
 import { Validate } from "class-validator";
 
 const service = new skillservice();

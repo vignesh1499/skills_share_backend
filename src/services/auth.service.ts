@@ -1,7 +1,7 @@
-import { dataSource } from "../../config/db";
-import { User } from "../../entities/user.entity";
+import { dataSource } from "../config/db";
+import { User } from "../entities/user.entity";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../../utils/jwt.util";
+import { generateToken } from "../utils/jwt.util";
 
 export class AuthService {
   private userRepo = dataSource.getRepository(User);

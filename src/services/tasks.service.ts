@@ -1,7 +1,7 @@
-import { dataSource } from "../../config/db";
-import { Tasks } from "../../entities/tasks.entity";
-import { User } from "../../entities/user.entity";
-import { TaskDto } from "../../validators/tasks.validator";
+import { dataSource } from "../config/db";
+import { Tasks } from "../entities/tasks.entity";
+import { User } from "../entities/user.entity";
+import { TaskDto } from "../validators/tasks.validator";
 
 export class TasksService {
   private tasksRepo = dataSource.getRepository(Tasks);

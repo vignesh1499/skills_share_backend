@@ -1,5 +1,5 @@
-import { TasksService } from "../../services/auth/tasks.service";
-import { TaskDto } from "../../validators/tasks.validator";
+import { TasksService } from "../services/tasks.service";
+import { TaskDto } from "../validators/tasks.validator";
 import { Response } from "express";
 
 const tasksService = new TasksService();

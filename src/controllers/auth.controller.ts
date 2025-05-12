@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AuthService } from "../../services/auth/auth.service";
-import { RegisterUserDTO, LoginDTO } from "../../validators/user.validator";
+import { AuthService } from "../services/auth.service";
+import { RegisterUserDTO, LoginDTO } from "../validators/user.validator";
 import { validate } from "class-validator";
 
 const authService = new AuthService();

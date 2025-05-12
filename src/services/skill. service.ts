@@ -1,7 +1,7 @@
-import { dataSource } from "../../config/db";
-import { Skill } from "../../entities/skills.entity";
-import { SkillDTO } from "../../validators/skill.validator";
-import { User } from "../../entities/user.entity";
+import { dataSource } from "../config/db";
+import { Skill } from "../entities/skills.entity";
+import { SkillDTO } from "../validators/skill.validator";
+import { User } from "../entities/user.entity";
 
 export class skillservice {
     private skillRepo = dataSource.getRepository(Skill);
