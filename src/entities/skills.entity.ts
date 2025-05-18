@@ -9,13 +9,23 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 
-@Entity("skills")
+export type NatureOfWork = 'onsite' | 'online';
+export type SkillStatus = 'open' | 'accepted' | 'completed' | 'rejected' | null;
+
+@Entity('skills')
 export class Skill {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user?.skills)
+  // Provider who creates the skill
+  @ManyToOne(() => User, user => user.skills, { eager: true })
+  @JoinColumn({ name: 'providerId' })
   provider: User;
+
+  // User who accepts the skill (optional)
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'userId' })
+  acceptedBy?: User | null | undefined;
 
   @Column()
   category: string;
@@ -24,14 +34,19 @@ export class Skill {
   experience: number;
 
   @Column({ type: 'varchar' })
-  nature_of_work: 'onsite' | 'online';
+  nature_of_work: NatureOfWork;
 
   @Column('decimal', { precision: 10, scale: 2 })
   hourly_rate: number;
 
-  @ManyToOne(() => User, user => user.skills, { eager: true })
-  @JoinColumn({ name: 'providerId' })
-  createdBy: User;
+  @Column({ type: 'varchar', default: null, nullable:true })
+  status: SkillStatus;
+
+  @Column({ type: 'boolean', default: false })
+  completion: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  approval: boolean;
 
   @CreateDateColumn()
   created_at: Date;

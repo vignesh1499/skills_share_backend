@@ -79,10 +79,10 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Skill, (skill) => skill.createdBy)
+  @OneToMany(() => Skill, (skill) => skill.provider)
   skills: Skill[];
 
-  @OneToMany(() => Tasks, (task) => task.createdBy)
+  @OneToMany(() => Tasks, (task) => task.provider)
   tasks: Tasks[];
 
 }

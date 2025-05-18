@@ -1,16 +1,16 @@
 import { DataSource } from "typeorm";
-import 'reflect-metadata';
+ import 'reflect-metadata';
 import { User } from "../entities/user.entity";
 import { Skill } from "../entities/skills.entity";
 import { Tasks } from "../entities/tasks.entity";
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 
 export const dataSource = new DataSource({
     type:"postgres",
-    host:process.env.DB_HOST || "localhost",
+    host:process.env.API_URL || "localhost",
     port:Number(process.env.DB_PORT || 5432),
     username:process.env.DB_USERNAME || "postgres",
     password:process.env.DB_PASSWORD  || "4321",
@@ -18,11 +18,10 @@ export const dataSource = new DataSource({
     subscribers:[User, Skill, Tasks],
     entities:[User, Skill, Tasks],
     synchronize:true,
-})
+    logging:true,
 
-// PORT=3000
-// DB_HOST=localhost
-// DB_PORT=5432
-// DB_USERNAME=postgres
-// DB_PASSWORD=4321
-// DB_NAME=skill_share_DB
+    extra: {
+    max: Number(process.env.DB_POOL_MAX) || 10,
+    min: Number(process.env.DB_POOL_MIN) || 2,
+  }
+})

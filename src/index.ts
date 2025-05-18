@@ -7,8 +7,8 @@ import { dataSource } from "./config/db";
 import { User } from "./entities/user.entity";
 
 // Swagger imports
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 // App setup
 const app = express();
@@ -30,7 +30,7 @@ app.get("/", (_req, res) => {
 // Register routes
 app.use("/auth", authRouters);
 app.use("/skill", skillRouters);
-app.use("/tasks", tasksRouters);
+app.use("/task", tasksRouters);
 
 // Swagger setup
 const swaggerOptions = {

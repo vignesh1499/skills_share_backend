@@ -1,24 +1,13 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-  JoinColumn,
-} from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./user.entity";
+import { Skill } from "./skills.entity";
 
 @Entity("tasks")
 export class Tasks {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    type: "enum",
-    enum: ["Category1", "Category2", "Category3"],
-    default: "Category1"
-  })
+  @Column()
   category: string;
 
   @Column()
@@ -46,10 +35,29 @@ export class Tasks {
   @Column({ type: "boolean", default: false })
   task_completed: boolean;
 
+  // Accepted User
+  @Column("uuid", { nullable: true })
+  userId: string | null;
 
-  @ManyToOne(() => User, (user) => user.tasks, { eager: true })
+  @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: "userId" })
-  createdBy: User;
+  acceptedUser: User | null;
+
+  // Provider
+  @Column("uuid", { nullable: true })
+  providerId: string | null;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: "providerId" })
+  provider: User | null;
+
+  // Skill
+  @Column({ nullable: true })
+  skillId: number | null;
+
+  @ManyToOne(() => Skill, { eager: true, nullable: true })
+  @JoinColumn({ name: "skillId" })
+  skill: Skill | null;
 
   @CreateDateColumn()
   created_at: Date;

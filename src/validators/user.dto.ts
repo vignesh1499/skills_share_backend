@@ -9,7 +9,7 @@ import {
   IsNotEmpty,
 } from "class-validator";
 
-export class RegisterUserDTO {
+export class RegisterUserDto {
   @IsIn(["user", "provider"], {
     message: "Type must be user or provider",
   })
@@ -90,7 +90,7 @@ export class RegisterUserDTO {
   password: string;
 }
 
-export class LoginDTO {
+export class LoginDto {
   @IsEmail()
   email: string;
 

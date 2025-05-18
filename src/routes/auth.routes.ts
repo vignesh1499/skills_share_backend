@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AuthController } from "../controllers/auth.controller";
+import { AuthController } from "../controllers/auth/auth.controller";
 
 /**
  * @swagger
@@ -56,6 +56,7 @@ const authRouters = Router();
 
 authRouters.post('/register', (req, res) => {AuthController.registerUser(req, res)});
 authRouters.post('/login',(req, res) => {AuthController.login(req, res)})
+authRouters.post('/refresh-token', (req, res) => {AuthController.refreshToken(req, res)})
 
 
 export default authRouters;

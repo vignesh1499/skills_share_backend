@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { SkillController } from "../controllers/skill.controller";
+import { SkillController } from "../controllers/skill/skill.controller";
 import { authenticateJWT } from "../middlewares/authMiddleware";
 
 
@@ -64,7 +64,10 @@ import { authenticateJWT } from "../middlewares/authMiddleware";
 const skillRouters = Router();
 const skillController = new SkillController();
 
-skillRouters.post('/create',authenticateJWT, (req, res) => {skillController.createSkill(req, res)});
-skillRouters.put('/update',authenticateJWT, (req, res) => {skillController.updateSkill(req, res)});
+skillRouters.post('/create', authenticateJWT, (req, res) => { skillController.createSkill(req, res) });
+skillRouters.put('/update', authenticateJWT, (req, res) => { skillController.updateSkill(req, res) });
+skillRouters.get('/get', authenticateJWT, (req, res) => { skillController.getSkills(req, res) });
+skillRouters.delete('/delete/:id', authenticateJWT, (req, res) => { skillController.deleteSkill(req, res) });
+skillRouters.patch("/postoffer/:id", authenticateJWT, (req, res) => { skillController.postOffer(req, res) });
 
 export default skillRouters;
