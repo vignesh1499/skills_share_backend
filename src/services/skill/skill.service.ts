@@ -71,21 +71,29 @@ export class SkillService {
   }
 
   // Get Skills
-  async getSkills(role: string) {
-    const where: Partial<Record<keyof Skill, any>> = {};
+  async getSkills(role: string, userId: string) {
+
+    let skills: any = [];
+
+    console.log(userId)
 
     if (role === 'user') {
-      where.status = 'open';
+      skills = await this.skillRepo.find({
+        where: { status: 'open' },
+        relations: ['provider', 'acceptedBy'],
+        order: { created_at: 'DESC' },
+      });
+    } else if (role === 'provider') {
+      skills = await this.skillRepo.find({
+        where: { providerId: userId },
+        order: { created_at: 'DESC' },
+      })
     }
+    // console.log(skills);
 
-    const skills = await this.skillRepo.find({
-      where,
-      relations: ['provider', 'acceptedBy'],
-      order: { created_at: 'DESC' },
-    });
-
-    return skills.map(skill => this.formatSkill(skill));
+    return skills.map((skill: Skill) => this.formatSkill(skill));
   }
+
 
   // Post Offer
   async postOffer(skillId: number, providerId: string) {

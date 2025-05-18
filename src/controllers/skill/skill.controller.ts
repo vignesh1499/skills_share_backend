@@ -86,10 +86,11 @@ export class SkillController {
   // Get Skills
   async getSkills(req: Request & { user?: any }, res: Response) {
     try {
-      const role = req.user?.role;
+      const {role, id} = req?.user;
+      console.log(role, id)
 
       if (!role) return res.status(400).json({ error: 'User role not found in token' });
-      const skills = await service.getSkills(role);
+      const skills = await service.getSkills(role, id);
       res.status(200).json({ data: skills });
     } catch (err) {
       console.error('Error fetching skills:', err);

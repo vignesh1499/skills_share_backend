@@ -17,15 +17,19 @@ export class Skill {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // Provider who creates the skill
+  // Direct access to foreign key
+  @Column({ name: 'ProviderId' })
+  providerId: string;
+
+  // Relation with User (provider)
   @ManyToOne(() => User, user => user.skills, { eager: true })
-  @JoinColumn({ name: 'providerId' })
+  @JoinColumn({ name: 'ProviderId' })
   provider: User;
 
-  // User who accepts the skill (optional)
+  // Relation with User (accepted by)
   @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'userId' })
-  acceptedBy?: User | null | undefined;
+  acceptedBy?: User | null;
 
   @Column()
   category: string;
@@ -39,7 +43,7 @@ export class Skill {
   @Column('decimal', { precision: 10, scale: 2 })
   hourly_rate: number;
 
-  @Column({ type: 'varchar', default: null, nullable:true })
+  @Column({ type: 'varchar', default: null, nullable: true })
   status: SkillStatus;
 
   @Column({ type: 'boolean', default: false })

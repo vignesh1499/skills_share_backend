@@ -26,7 +26,6 @@ export class AuthController {
       const user = await authService.registerUser(userDetails);
       return success(res, 201, "User registered successfully", { user });
     } catch (error: any) {
-      console.error("Register Error:", error.message);
       if (error.message === "User already exists") {
         return error(res, 409, error.message);
       }
@@ -46,7 +45,6 @@ export class AuthController {
       const result = await authService.login(loginDetails);
       return success(res, 200, "User logged in successfully", { token: result.token });
     } catch (error: any) {
-      console.error("Login Error:", error.message);
       if (["Invalid mailId", "Invalid Password"].includes(error.message)) {
         return error(res, 400, error.message);
       }
